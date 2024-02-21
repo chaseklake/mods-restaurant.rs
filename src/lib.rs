@@ -13,30 +13,8 @@ mod tests {
     }
 }
 
-// Defining a restaurant library to demonstrate Modules
-// Creates a new private module "front_of_house"
-mod front_of_house {
-    // The first submodule "front_of_house::hosting"
-    // "pub" here means anything with access to "front_of_house" can access "hosting"
-    pub mod hosting {
-        // Some functions of "hosting" module
-        // "pub" here means that anything with access to "hosting" can access this function
-        pub fn add_to_waitlist() {}
-
-        fn seat_at_table() {}
-    }
-
-    // The second submodule "front_of_house::serving"
-    // This is a "sister" module to "hosting"
-    mod serving {
-        // Some functions
-        fn take_order() {}
-
-        fn serve_order() {}
-
-        fn take_payment() {}
-    }
-}
+// We've defined this module in a separate file "src/front_of_house.rs"
+mod front_of_house;
 
 // An exposed, or "public" function that a library user can call
 // Since this function is in the same module as "front_of_house," it can access "front_of_house"
@@ -78,7 +56,7 @@ pub fn eat_at_restaurant2() {
 }
 
 mod customer {
-    pub fn eat_at_restaurant() {
+    pub fn _eat_at_restaurant() {
         // The following won't compile since the "use" from before does not exist in "mod customer"
         // hosting::add_to_waitlist();
         // To fix this, we could add "super::hosting" before this function to bring "hosting" back into scope
@@ -88,7 +66,7 @@ mod customer {
 fn deliver_order() {}
 
 mod back_of_house {
-    fn fix_incorrect_order() {
+    fn _fix_incorrect_order() {
         // cook_order() is in the same scope as fix_incorrect_order()
         cook_order();
         // An example of using "super" to access a function in the parent's (back_of_house) scope
@@ -116,6 +94,7 @@ mod back_of_house {
     // Making an enum public makes all of its variants public by default:
     pub enum Appetizer {
         Soup,
+        
         Salad,
     }
 }
